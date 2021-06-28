@@ -1,0 +1,23 @@
+version: '3'
+services:
+  react-client:
+    container_name: react-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/home/dyduch/store-react-client' 
+      # - '/home/dyduch/store-react-client/node_modules'
+    ports:
+      - 12345:3000
+    working_dir: /home/dyduch/store-react-client/
+    command: bash -c "cd store-react-client && npm start"
+  # ebiznes:
+  #   build: .
+  #   ports:
+  #   - 12345:9000
+  #   - 12346:3000
+  #   volumes:
+  #    - .:/home/dyduch/projekt/sklep/
+  #   working_dir: /home/dyduch/projekt/sklep
+  #   command: bash -c "source /home/dyduch/.sdkman/bin/sdkman-init.sh && sbt run"
