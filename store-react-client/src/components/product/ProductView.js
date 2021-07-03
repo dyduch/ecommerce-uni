@@ -1,4 +1,5 @@
 export function ProductView(props) {
+
     return (
         <div>
             <div className={"product-images"}>
