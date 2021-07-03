@@ -1,0 +1,21 @@
+.products {
+    background-color: aqua;
+    justify-content: center;
+    width: 400px;
+    margin: 0 auto;
+}
+
+li {
+    display: inline;
+    padding: 2px;
+}
+
+.products-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.preview-product {
+    padding: 20px;
+}

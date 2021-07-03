@@ -1,30 +1,22 @@
 import React, {useContext} from "react";
-import {useBasket} from "../../hooks/useBasket";
 import ShopContext from "../../contexts/ShopContext";
+import {ProductPreview} from "./ProductPreview";
+import CartContext from "../../contexts/CartContext";
+import "./style/Product.css";
 
 export function Products(props) {
-    const { products } = useContext(ShopContext)
-    const { basket, addProduct, removeProduct } = useBasket();
+    const {products} = useContext(ShopContext);
+    const {addItem} = useContext(CartContext);
 
     return (
         <div>
             <div className="products">
-                <ul>
-                    {products.map((product) => (<li>
-                        {product.name}
-                        <button onClick={() => addProduct(product)}>add product to basket</button>
-                    </li>))}
-                </ul>
-            </div>
-
-            <div className="basket">
-                <ul>
-                    /*
-                    {basket.map((product) => (<li>
-                        {product.name}
-                        <button onClick={() => removeProduct(product.id)}>remove product</button>
-                    </li>))}
-                    */
+                <ul className="products-list">
+                    {products.map((product) => (
+                        <li>
+                            <ProductPreview name={product.name} color={product.color} price={product.price} image={product.image}/>
+                            <button onClick={() => addItem(product)}>Add To Cart</button>
+                        </li>))}
                 </ul>
             </div>
         </div>

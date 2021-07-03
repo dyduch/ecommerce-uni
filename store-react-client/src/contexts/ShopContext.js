@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {fetchProducts} from "../api/products";
+import {fetchMockProducts, fetchProducts} from "../api/products";
 
 const defaultValue = {
-    products: []
+    products: [],
 }
 
 export const ShopContext = React.createContext(defaultValue);
@@ -15,12 +15,13 @@ export function ShopContextProvider(props) {
     }
 
     useEffect(() => {
-        fetchProducts()
+        fetchMockProducts()
             .then((products) => {
-                console.log(products)
                 setProducts(products)
             })
     }, []);
+
+
 
     return (
         <ShopContext.Provider value={providerValue}>{props.children}</ShopContext.Provider>
