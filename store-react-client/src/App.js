@@ -8,6 +8,7 @@ import {PageHeader} from "./components/Header";
 import React from "react";
 import {ShoppingCart} from "./components/cart/ShoppingCart";
 import {CartContextProvider} from "./contexts/CartContext";
+import {Navbar} from "./components/menu/Navbar";
 
 function App() {
     return (
@@ -15,16 +16,7 @@ function App() {
             <div>
                 <ShopContextProvider>
                     <CartContextProvider>
-                        <BrowserRouter>
-                            <ul>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/cart">Shopping Cart</Link></li>
-                                <li><Link to="/products">Products</Link></li>
-                            </ul>
-                            <Route path="/" component={PageHeader}/>
-                            <Route path="/products" component={Products}/>
-                            <Route path="/cart" component={ShoppingCart}/>
-                        </BrowserRouter>
+                        <Navbar/>
                     </CartContextProvider>
                 </ShopContextProvider>
             </div>

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 const defaultValue = {
     cartItems: [],
+    totalPrice: 0,
 }
 
 export const CartContext = React.createContext(defaultValue);
 
 export function CartContextProvider(props) {
     const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(Number(0));
 
     const addItem = item => {
         const existingItem = getItem(item.id, cartItems);
@@ -21,6 +23,7 @@ export function CartContextProvider(props) {
                 newItem,
             ]);
         }
+        setTotalPrice(price => Number(price) + Number(item.price));
     }
 
     const removeItem = id => {
@@ -31,10 +34,12 @@ export function CartContextProvider(props) {
             const filteredItems = cartItems.filter(product => product.id !== id);
             setCartItems([...filteredItems]);
         }
+        setTotalPrice(price => Number(price) - Number(existingItem.price));
     }
 
     const providerValue = {
         cartItems,
+        totalPrice,
         addItem,
         removeItem,
     }
