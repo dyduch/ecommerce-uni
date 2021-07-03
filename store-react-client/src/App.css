@@ -18,3 +18,8 @@
 .App-link {
   color: #61dafb;
 }
+
+.nav-item {
+  display: inline;
+  padding: 2px;
+}

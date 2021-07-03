@@ -2,8 +2,6 @@ import React, {useContext, useState} from "react";
 import CartContext from "../../contexts/CartContext";
 import {CartProduct} from "./CartProduct";
 import {BrowserRouter, Link, Route} from "react-router-dom";
-import {PageHeader} from "../Header";
-import {Products} from "../product/Products";
 import {Checkout} from "../checkout/Checkout";
 
 export function ShoppingCart(props) {

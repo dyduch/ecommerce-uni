@@ -5,10 +5,7 @@
     margin: 0 auto;
 }
 
-li {
-    display: inline;
-    padding: 2px;
-}
+
 
 .products-list {
     list-style: none;
