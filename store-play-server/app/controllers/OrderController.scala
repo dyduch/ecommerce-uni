@@ -95,7 +95,7 @@ class OrderController @Inject()(ordersRepo: OrderRepository, userRepo: UserRepos
         )
       },
       order => {
-        ordersRepo.update(order.id, Order(order.id, order.date.toString, order.total, order.user_id, order.address_id)).map { _ =>
+        ordersRepo.update(order.id, Order(order.id, new SimpleDateFormat("yyyy-MM-dd").format(order.date), order.total, order.user_id, order.address_id)).map { _ =>
           Redirect(routes.OrderController.update(order.id)).flashing("success" -> "order updated")
         }
       }
@@ -130,7 +130,7 @@ class OrderController @Inject()(ordersRepo: OrderRepository, userRepo: UserRepos
         )
       },
       order => {
-        ordersRepo.create(order.date.toString, order.total, order.user_id, order.address_id).map { _ =>
+        ordersRepo.create(new SimpleDateFormat("yyyy-MM-dd").format(order.date), order.total, order.user_id, order.address_id).map { _ =>
           Redirect(routes.OrderController.add()).flashing("success" -> "order.created")
         }
       }

@@ -149,5 +149,27 @@ POST          /api/users/add                    controllers.UserController.addJS
 DELETE        /api/users/delete/:id             controllers.UserController.deleteJSON(id: Long)
 PUT           /api/users/update                 controllers.UserController.updateJSON(id: Long, name: String, password:String, admin: Boolean, address_id: Long)
 
+
+# order items
+
+# form controllers
+
+GET           /addorderitem                     controllers.OrderItemController.add()
+POST          /addorderitemhandle               controllers.OrderItemController.addHandle()
+GET           /updateorderitem/:id              controllers.OrderItemController.update(id: Long)
+POST          /updateorderitemhandle            controllers.OrderItemController.updateHandle()
+GET           /orderitems                       controllers.OrderItemController.getAll()
+GET           /orderitem/:id                    controllers.OrderItemController.get(id: Long)
+GET           /deleteorderitem/:id              controllers.OrderItemController.delete(id: Long)
+
+# json controllers
+
+GET           /api/orderitems                   controllers.OrderItemController.getAllJSON()
+GET           /api/orderitems/order/:id         controllers.OrderItemController.getForOrderJSON(id: Long)
+GET           /api/orderitems/:id               controllers.OrderItemController.getJSON(id: Long)
+POST          /api/orderitems/add               controllers.OrderItemController.addJSON(size: Int, quantity: Int, order_id: Long, product_id: Long)
+DELETE        /api/orderitems/delete/:id        controllers.OrderItemController.deleteJSON(id: Long)
+PUT           /api/orderitems/update            controllers.OrderItemController.updateJSON(id: Long, size: Int, quantity: Int, order_id: Long, product_id: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
