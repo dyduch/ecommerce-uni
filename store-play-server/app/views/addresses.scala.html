@@ -1,0 +1,9 @@
+@(addresses: Seq[Address])
+
+@for(address <- addresses) {
+    <b>@address.street @address.number</b>
+    <b>@address.city @address.zipcode </b>
+    <b>@address.country</b>
+    <a href="@controllers.routes.AddressController.update(address.id)">Edit</a>
+    <a href="@controllers.routes.AddressController.delete(address.id)">Delete</a>
+}

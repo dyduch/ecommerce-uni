@@ -1,0 +1,29 @@
+
+@(pq: Form[UpdateProductQuantityForm], product: Seq[Product])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.ProductQuantityController.updateHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@pq("id").value" type="hidden" />
+    @inputText(pq("size"))
+    @inputText(pq("quantity"))
+
+    <label for="product"></label>
+    <select name="product" id="product">
+    @for(a <- product){
+        @if(a.id.toString==pq("product_id").value.getOrElse(0)) {
+            <option value="@a.id" selected>@a.name</option>
+        }else{
+            <option value="@a.id">@a.name</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update ProductQuantity"/>
+    </div>
+}

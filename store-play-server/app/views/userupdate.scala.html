@@ -1,0 +1,30 @@
+
+@(user: Form[UpdateUserForm],address: Seq[Address])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.UserController.updateHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@user("id").value" type="hidden" />
+    @inputText(user("name"))
+    @inputText(user("password"))
+    @checkbox(user("admin"))
+
+    <label for="address"></label>
+    <select name="address" id="address">
+    @for(a <- address){
+        @if(a.id.toString==user("address_id").value.getOrElse(0)) {
+            <option value="@a.id" selected>@a.street @a.number @a.city/option>
+        }else{
+            <option value="@a.id">@a.street @a.number @a.city</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update User"/>
+    </div>
+}

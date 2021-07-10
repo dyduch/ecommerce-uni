@@ -1,0 +1,9 @@
+@(pqs: Seq[ProductQuantity])
+
+@for(pq <- pqs) {
+    <b>@pq.size</b>
+    @pq.quantity
+    @pq.product_id
+    <a href="@controllers.routes.ProductQuantityController.update(pq.id)">Edit</a>
+    <a href="@controllers.routes.ProductQuantityController.delete(pq.id)">Delete</a>
+}

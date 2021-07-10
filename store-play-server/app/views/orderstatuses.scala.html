@@ -1,0 +1,8 @@
+@(orderstatuses: Seq[OrderStatus])
+
+@for(os <- orderstatuses) {
+    <b>@os.status</b>
+    @os.order_id
+    <a href="@controllers.routes.OrderStatusController.update(os.id)">Edit</a>
+    <a href="@controllers.routes.OrderStatusController.delete(os.id)">Delete</a>
+}

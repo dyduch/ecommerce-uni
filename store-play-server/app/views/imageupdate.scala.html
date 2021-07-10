@@ -1,0 +1,28 @@
+
+@(image: Form[UpdateImageForm],product: Seq[Product])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.ImageController.updateHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@image("id").value" type="hidden" />
+    @inputText(image("url"))
+
+    <label for="product"></label>
+    <select name="product" id="product">
+    @for(prod <- product){
+        @if(prod.id.toString==image("product_id").value.getOrElse(0)) {
+            <option value="@prod.id" selected>@prod.name</option>
+        }else{
+            <option value="@prod.id">@prod.name</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Image"/>
+    </div>
+}
