@@ -62,7 +62,7 @@ CREATE TABLE "order_data"
     "id"      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "address_id" INTEGER NOT NULL,
     "user_id"    INTEGER NOT NULL,
-    "total"   REAL    NOT NULL,
+    "total"   INTEGER    NOT NULL,
     "date"    TEXT    NOT NULL
 );
 

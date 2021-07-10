@@ -83,9 +83,30 @@ GET           /deleteimage/:id                  controllers.ImageController.dele
 GET           /api/images                       controllers.ImageController.getAllJSON()
 GET           /api/images/product/:id           controllers.ImageController.getAllProductJSON(id: Long)
 GET           /api/images/:id                   controllers.ImageController.getJSON(id: Long)
-POST          /api/images/add                   controllers.ImageController.addJSON(url: String, product_id: Int)
+POST          /api/images/add                   controllers.ImageController.addJSON(url: String, product_id: Long)
 DELETE        /api/images/delete/:id            controllers.ImageController.deleteJSON(id: Long)
-PUT           /api/images/update                controllers.ImageController.updateJSON(id: Long, url: String, product_id: Int)
+PUT           /api/images/update                controllers.ImageController.updateJSON(id: Long, url: String, product_id: Long)
+
+# orders
+
+# form controllers
+
+GET           /addorder                         controllers.OrderController.add()
+POST          /addorderhandle                   controllers.OrderController.addHandle()
+GET           /updateorder/:id                  controllers.OrderController.update(id: Long)
+POST          /updateorderhandle                controllers.OrderController.updateHandle()
+GET           /orders                           controllers.OrderController.getAll()
+GET           /order/:id                        controllers.OrderController.get(id: Long)
+GET           /deleteorder/:id                  controllers.OrderController.delete(id: Long)
+
+# json controllers
+
+GET           /api/orders                       controllers.OrderController.getAllJSON()
+GET           /api/orders/user/:id              controllers.OrderController.getForUserJSON(id: Long)
+GET           /api/orders/:id                   controllers.OrderController.getJSON(id: Long)
+POST          /api/orders/add                   controllers.OrderController.addJSON(date: String, total: Int, user_id: Long, address_id: Long)
+DELETE        /api/orders/delete/:id            controllers.OrderController.deleteJSON(id: Long)
+PUT           /api/orders/update                controllers.OrderController.updateJSON(id: Long, date: String, total: Int, user_id: Long, address_id: Long)
 
 
 

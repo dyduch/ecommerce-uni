@@ -13,10 +13,10 @@ class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (impl
   import dbConfig._
   import profile.api._
 
-  class OrderTable(tag: Tag) extends Table[Order](tag, "order") {
+  class OrderTable(tag: Tag) extends Table[Order](tag, "order_data") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def total = column[Double]("total")
+    def total = column[Int]("total")
 
     def date = column[String]("date")
 
@@ -30,7 +30,7 @@ class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (impl
 
   private val order_table = TableQuery[OrderTable]
 
-  def create(date: String, total: Double, user_id: Long, address_id: Long): Future[Order] = db.run {
+  def create(date: String, total: Int, user_id: Long, address_id: Long): Future[Order] = db.run {
     (order_table.map(order => (order.date, order.total, order.user_id, order.address_id))
       returning order_table.map(_.id)
       into { case ((date, total, user_id, address_id), id) => Order(id, date, total, user_id, address_id) }
