@@ -66,6 +66,26 @@ POST          /api/addresses/add                controllers.AddressController.ad
 DELETE        /api/addresses/delete/:id         controllers.AddressController.deleteJSON(id: Long)
 PUT           /api/addresses/update             controllers.AddressController.updateJSON(id: Long, street: String, number: String, city: String, zipcode: String, country: String)
 
+# images
+
+# form controllers
+
+GET           /addimage                         controllers.ImageController.add()
+POST          /addimagehandle                   controllers.ImageController.addHandle()
+GET           /updateimage/:id                  controllers.ImageController.update(id: Long)
+POST          /updateimagehandle                controllers.ImageController.updateHandle()
+GET           /images                           controllers.ImageController.getAll()
+GET           /image/:id                        controllers.ImageController.get(id: Long)
+GET           /deleteimage/:id                  controllers.ImageController.delete(id: Long)
+
+# json controllers
+
+GET           /api/images                       controllers.ImageController.getAllJSON()
+GET           /api/images/product/:id           controllers.ImageController.getAllProductJSON(id: Long)
+GET           /api/images/:id                   controllers.ImageController.getJSON(id: Long)
+POST          /api/images/add                   controllers.ImageController.addJSON(url: String, product_id: Int)
+DELETE        /api/images/delete/:id            controllers.ImageController.deleteJSON(id: Long)
+PUT           /api/images/update                controllers.ImageController.updateJSON(id: Long, url: String, product_id: Int)
 
 
 

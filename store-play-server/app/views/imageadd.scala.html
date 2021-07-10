@@ -1,0 +1,20 @@
+@(image: Form[CreateImageForm],product: Seq[Product])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.ImageController.addHandle()) {
+    @helper.CSRF.formField
+    @inputText(image("url"))
+
+    <select name="product" id="product">
+    @for(prod <- product){
+        <option value="@prod.id">@prod.name</option>
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Add Image"/>
+    </div>
+}

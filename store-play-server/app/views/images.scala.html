@@ -1,0 +1,8 @@
+@(images: Seq[Image])
+
+@for(image <- images) {
+    <b>@image.url</b>
+    @image.product_id
+    <a href="@controllers.routes.ImageController.update(image.id)">Edit</a>
+    <a href="@controllers.routes.ImageController.delete(image.id)">Delete</a>
+}
