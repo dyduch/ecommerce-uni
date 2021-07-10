@@ -38,7 +38,7 @@ CREATE TABLE "address"
     "number"  TEXT    NOT NULL,
     "city"    TEXT    NOT NULL,
     "zipcode" TEXT    NOT NULL,
-    "county"  TEXT    NOT NULL
+    "country"  TEXT    NOT NULL
 );
 
 CREATE TABLE "supplier"

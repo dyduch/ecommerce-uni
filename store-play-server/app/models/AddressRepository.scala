@@ -31,6 +31,15 @@ class AddressRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impl
 
   val address_table = TableQuery[AddressTable]
 
+  def getById(id: Long): Future[Address] = db.run {
+    address_table.filter(_.id === id).result.head
+  }
+
+  def getByIdOption(id: Long): Future[Option[Address]] = db.run {
+    address_table.filter(_.id === id).result.headOption
+  }
+
+
   def create(street: String, number: String, city: String, zipcode: String, country: String): Future[Address] = db.run {
     (address_table.map(a => (a.street, a.number, a.city, a.zipcode, a.country))
       returning address_table.map(_.id)

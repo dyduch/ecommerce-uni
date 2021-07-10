@@ -46,6 +46,26 @@ POST          /api/categories/add               controllers.CategoryController.a
 DELETE        /api/categories/delete/:id        controllers.CategoryController.deleteJSON(id: Int)
 PUT           /api/categories/update            controllers.CategoryController.updateCategoryJSON(id: Int, name: String)
 
+# addresses
+
+# form controllers
+
+GET           /addaddress                       controllers.AddressController.add()
+POST          /addaddresshandle                 controllers.AddressController.addHandle()
+GET           /updateaddress/:id                controllers.AddressController.update(id: Long)
+POST          /updateaddresshandle              controllers.AddressController.updateHandle()
+GET           /addresses                        controllers.AddressController.getAll()
+GET           /addresses/:id                    controllers.AddressController.get(id: Long)
+GET           /deleteaddress/:id                controllers.AddressController.delete(id: Long)
+
+# json controllers
+
+GET           /api/addresses                    controllers.AddressController.getAllJSON
+GET           /api/addresses/:id                controllers.AddressController.getJSON(id: Long)
+POST          /api/addresses/add                controllers.AddressController.addJSON(street: String, number: String, city: String, zipcode: String, country: String)
+DELETE        /api/addresses/delete/:id         controllers.AddressController.deleteJSON(id: Long)
+PUT           /api/addresses/update             controllers.AddressController.updateJSON(id: Long, street: String, number: String, city: String, zipcode: String, country: String)
+
 
 
 

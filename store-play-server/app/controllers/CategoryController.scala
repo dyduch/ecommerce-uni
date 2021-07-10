@@ -4,12 +4,11 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import models.{Category, CategoryRepository }
 import play.api.data.Form
-import play.api.data.Forms.{longNumber, mapping, nonEmptyText, number}
+import play.api.data.Forms.{mapping, nonEmptyText, number}
 import play.api.libs.json.Json
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success};
 
 @Singleton
 class CategoryController @Inject()(categoryRepo: CategoryRepository, cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {

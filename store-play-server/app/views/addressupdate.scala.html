@@ -1,0 +1,20 @@
+
+@(address: Form[UpdateAddressForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.AddressController.updateHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@address("id").value" type="hidden" />
+    @inputText(address("street"))
+    @inputText(address("number"))
+    @inputText(address("city"))
+    @inputText(address("zipcode"))
+    @inputText(address("country"))
+
+    <div class="buttons">
+        <input type="submit" value="Update Address"/>
+    </div>
+}
