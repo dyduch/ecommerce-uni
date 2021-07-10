@@ -5,6 +5,7 @@ import com.google.inject.Singleton
 import models.{Category, CategoryRepository, Product, ProductRepository}
 import play.api.data.Form
 import play.api.data.Forms.{longNumber, mapping, nonEmptyText, number}
+import play.api.libs.json.Json
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,6 +16,8 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
   val productForm: Form[CreateProductForm] = Form {
     mapping(
       "name" -> nonEmptyText,
+      "color" -> nonEmptyText,
+      "price" -> number,
       "description" -> nonEmptyText,
       "category" -> number,
     )(CreateProductForm.apply)(CreateProductForm.unapply)
@@ -24,6 +27,8 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     mapping(
       "id" -> longNumber,
       "name" -> nonEmptyText,
+      "color" -> nonEmptyText,
+      "price" -> number,
       "description" -> nonEmptyText,
       "category" -> number,
     )(UpdateProductForm.apply)(UpdateProductForm.unapply)
@@ -31,16 +36,16 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
 
   def getProducts: Action[AnyContent] = Action.async { implicit request =>
-      val products = productsRepo.list()
-      products.map(ps => Ok(views.html.products(ps)))
+    val products = productsRepo.list()
+    products.map(ps => Ok(views.html.products(ps)))
   }
 
   def getProduct(id: Long): Action[AnyContent] = Action.async { implicit request =>
     val product = productsRepo.getByIdOption(id)
-    product.map(pr => pr match {
+    product.map {
       case Some(p) => Ok(views.html.product(p))
       case None => Redirect(routes.ProductController.getProducts())
-    })
+    }
   }
 
 
@@ -58,7 +63,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
     val product = productsRepo.getById(id)
     product.map(product => {
-      val prodForm = updateProductForm.fill(UpdateProductForm(product.id, product.name, product.description, product.category_id))
+      val prodForm = updateProductForm.fill(UpdateProductForm(product.id, product.name, product.color, product.price, product.description, product.category_id))
       Ok(views.html.productupdate(prodForm, categ))
     })
   }
@@ -77,7 +82,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
         )
       },
       product => {
-        productsRepo.update(product.id, Product(product.id, product.name, product.description, product.category)).map { _ =>
+        productsRepo.update(product.id, Product(product.id, product.name, product.color, product.price, product.description, product.category_id)).map { _ =>
           Redirect(routes.ProductController.updateProduct(product.id)).flashing("success" -> "product updated")
         }
       }
@@ -104,7 +109,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
         )
       },
       product => {
-        productsRepo.create(product.name, product.description, product.category).map { _ =>
+        productsRepo.create(product.name, product.color, product.price, product.description, product.category_id).map { _ =>
           Redirect(routes.ProductController.addProduct()).flashing("success" -> "product.created")
         }
       }
@@ -112,8 +117,39 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
   }
 
+  def addProductJSON(name: String, color: String, price: Int, description: String, category_id: Int): Action[AnyContent] = Action.async { implicit request =>
+    productsRepo.create(name, color, price, description, category_id).map {
+      res => Ok(Json.toJson(res))
+    }
+  }
+
+  def getProductsJSON: Action[AnyContent] = Action.async { implicit request =>
+    val products = productsRepo.list()
+    products.map(products => Ok(Json.toJson(products)))
+  }
+
+  def getProductJSON(id: Long): Action[AnyContent] = Action.async { implicit request =>
+    val product = productsRepo.getByIdOption(id)
+    product.map {
+      case product@Some(p) => Ok(Json.toJson(product))
+      case None => Redirect(routes.ProductController.getProductsJSON)
+    }
+  }
+
+  def deleteJSON(id: Long): Action[AnyContent] = Action.async { implicit request =>
+    productsRepo.delete(id).map {
+      _ => Ok(Json.toJson(id))
+    }
+  }
+
+  def updateProductJSON(id: Long, name: String, color: String, price: Int, description: String, category_id: Int): Action[AnyContent] = Action.async { implicit request =>
+    productsRepo.update(id, new Product(id, name, color, price, description, category_id)).map {
+      _ => Ok(Json.toJson(id))
+    }
+  }
+
 }
 
-case class CreateProductForm(name: String, description: String, category: Int)
+case class CreateProductForm(name: String, color: String, price: Int, description: String, category_id: Int)
 
-case class UpdateProductForm(id: Long, name: String, description: String, category: Int)
+case class UpdateProductForm(id: Long, name: String, color: String, price: Int, description: String, category_id: Int)

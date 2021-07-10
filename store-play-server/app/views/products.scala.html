@@ -2,6 +2,8 @@
 
 @for(product <- products) {
     <b>@product.name</b>
+    @product.color
+    @product.price
     @product.description
     @product.category_id
     <a href="@controllers.routes.ProductController.updateProduct(product.id)">Edit</a>

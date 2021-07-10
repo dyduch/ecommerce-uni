@@ -11,7 +11,7 @@ CREATE TABLE "product"
     "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name"        VARCHAR NOT NULL,
     "color"       VARCHAR NOT NULL,
-    "price"       REAL    NOT NULL,
+    "price"       INTEGER    NOT NULL,
     "description" TEXT    NOT NULL,
     "category_id"    INTEGER NOT NULL
 );
