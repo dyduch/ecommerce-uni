@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class SupplierRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addressRepository: AddressRepository) (implicit ec: ExecutionContext) {
+class SupplierRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (implicit ec: ExecutionContext) {
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -18,24 +18,19 @@ class SupplierRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, ad
 
     def name = column[String]("name")
 
-    def address = column[Long]("address")
+    def address_id = column[Long]("address_id")
 
-    def address_fk = foreignKey("address_fk", address, address_table)(_.id)
-
-    override def * = (id, name, address) <> ((Supplier.apply _).tupled, Supplier.unapply)
+    override def * = (id, name, address_id) <> ((Supplier.apply _).tupled, Supplier.unapply)
 
   }
 
-  import addressRepository.AddressTable
-
-  private val address_table = TableQuery[AddressTable]
   private val supplier_table = TableQuery[SupplierTable]
 
-  def create(name: String, address: Long): Future[Supplier] = db.run {
-    (supplier_table.map(supplier => (supplier.name, supplier.address))
+  def create(name: String, address_id: Long): Future[Supplier] = db.run {
+    (supplier_table.map(supplier => (supplier.name, supplier.address_id))
       returning supplier_table.map(_.id)
-      into { case ((name, address), id) => Supplier(id, name, address) }
-      ) += (name, address)
+      into { case ((name, address_id), id) => Supplier(id, name, address_id) }
+      ) += (name, address_id)
   }
 
   def list(): Future[Seq[Supplier]] = db.run {
@@ -43,7 +38,7 @@ class SupplierRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, ad
   }
 
   def getByAddress(address_id: Long): Future[Seq[Supplier]] = db.run {
-    supplier_table.filter(_.address === address_id).result
+    supplier_table.filter(_.address_id === address_id).result
   }
 
   def getById(id: Long): Future[Supplier] = db.run {

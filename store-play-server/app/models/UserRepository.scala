@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addressRepository: AddressRepository) (implicit ec: ExecutionContext) {
+class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -22,24 +22,19 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addres
 
     def admin = column[Boolean]("admin")
 
-    def address = column[Long]("address")
+    def address_id = column[Long]("address_id")
 
-    def address_fk = foreignKey("address_fk", address, address_table)(_.id)
-
-    override def * = (id, name, password, admin, address) <> ((User.apply _).tupled, User.unapply)
+    override def * = (id, name, password, admin, address_id) <> ((User.apply _).tupled, User.unapply)
 
   }
 
-  import addressRepository.AddressTable
-
-  private val address_table = TableQuery[AddressTable]
   private val user_table = TableQuery[UserTable]
 
-  def create(name: String, password: String, admin: Boolean, address: Long): Future[User] = db.run {
-    (user_table.map(user => (user.name, user.password, user.admin, user.address))
+  def create(name: String, password: String, admin: Boolean, address_id: Long): Future[User] = db.run {
+    (user_table.map(user => (user.name, user.password, user.admin, user.address_id))
       returning user_table.map(_.id)
-      into { case ((name, password, admin, address), id) => User(id, name, password, admin, address) }
-      ) += (name, password, admin, address)
+      into { case ((name, password, admin, address_id), id) => User(id, name, password, admin, address_id) }
+      ) += (name, password, admin, address_id)
   }
 
   def list(): Future[Seq[User]] = db.run {
@@ -51,7 +46,7 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addres
   }
 
   def getByAddress(address_id: Long): Future[Seq[User]] = db.run {
-    user_table.filter(_.address === address_id).result
+    user_table.filter(_.address_id === address_id).result
   }
 
   def getById(id: Long): Future[User] = db.run {

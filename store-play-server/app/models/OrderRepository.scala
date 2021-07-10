@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addressRepository: AddressRepository, userRepository: UserRepository) (implicit ec: ExecutionContext) {
+class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -20,29 +20,21 @@ class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addre
 
     def date = column[String]("date")
 
-    def user = column[Long]("user")
+    def user_id = column[Long]("user_id")
 
-    def user_fk = foreignKey("user_fk", user, user_table)(_.id)
+    def address_id = column[Long]("address_id")
 
-    def address = column[Long]("address")
-
-    def address_fk = foreignKey("address_fk", address, address_table)(_.id)
-
-    override def * = (id, date, total, user, address) <> ((Order.apply _).tupled, Order.unapply)
+    override def * = (id, date, total, user_id, address_id) <> ((Order.apply _).tupled, Order.unapply)
 
   }
-  import addressRepository.AddressTable
-  import userRepository.UserTable
 
-  private val address_table = TableQuery[AddressTable]
-  private val user_table = TableQuery[UserTable]
   private val order_table = TableQuery[OrderTable]
 
-  def create(date: String, total: Double, user: Long, address: Long): Future[Order] = db.run {
-    (order_table.map(order => (order.date, order.total, order.user, order.address))
+  def create(date: String, total: Double, user_id: Long, address_id: Long): Future[Order] = db.run {
+    (order_table.map(order => (order.date, order.total, order.user_id, order.address_id))
       returning order_table.map(_.id)
-      into { case ((date, total, user, address), id) => Order(id, date, total, user, address) }
-      ) += (date, total, user, address)
+      into { case ((date, total, user_id, address_id), id) => Order(id, date, total, user_id, address_id) }
+      ) += (date, total, user_id, address_id)
   }
 
   def list(): Future[Seq[Order]] = db.run {
@@ -50,7 +42,7 @@ class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addre
   }
 
   def getByAddress(address_id: Long): Future[Seq[Order]] = db.run {
-    order_table.filter(_.address === address_id).result
+    order_table.filter(_.address_id === address_id).result
   }
 
   def getById(id: Long): Future[Order] = db.run {
@@ -58,7 +50,7 @@ class OrderRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, addre
   }
 
   def getByUser(user_id: Long): Future[Seq[Order]] = db.run {
-    order_table.filter(_.user === user_id).result
+    order_table.filter(_.user_id === user_id).result
   }
 
   def getByIdOption(id: Long): Future[Option[Order]] = db.run {

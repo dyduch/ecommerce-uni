@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) {
+class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -20,25 +20,22 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
 
     def description = column[String]("description")
 
-    def category = column[Int]("category")
+    def category_id = column[Int]("category_id")
 
-    def category_fk = foreignKey("cat_fk", category, categoryRepository.getTableQuery)(_.id)
-
-    override def * = (id, name, description, category) <> ((Product.apply _).tupled, Product.unapply)
+    override def * = (id, name, description, category_id) <> ((Product.apply _).tupled, Product.unapply)
   }
-
 
   val product = TableQuery[ProductTable]
 
-  def create(name: String, description: String, category: Int): Future[Product] = db.run {
-    (product.map(p => (p.name, p.description, p.category))
+  def create(name: String, description: String, category_id: Int): Future[Product] = db.run {
+    (product.map(p => (p.name, p.description, p.category_id))
       // Now define it to return the id, because we want to know what id was generated for the person
       returning product.map(_.id)
       // And we define a transformation for the returned value, which combines our original parameters with the
       // returned id
-      into { case ((name, description, category), id) => Product(id, name, description, category) }
+      into { case ((name, description, category_id), id) => Product(id, name, description, category_id) }
       // And finally, insert the product into the database
-      ) += (name, description, category)
+      ) += (name, description, category_id)
   }
 
   def list(): Future[Seq[Product]] = db.run {
@@ -46,7 +43,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
   }
 
   def getByCategory(category_id: Int): Future[Seq[Product]] = db.run {
-    product.filter(_.category === category_id).result
+    product.filter(_.category_id === category_id).result
   }
 
   def getById(id: Long): Future[Product] = db.run {
@@ -58,7 +55,7 @@ class ProductRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cate
   }
 
   def getByCategories(category_ids: List[Int]): Future[Seq[Product]] = db.run {
-    product.filter(_.category inSet category_ids).result
+    product.filter(_.category_id inSet category_ids).result
   }
 
   def delete(id: Long): Future[Unit] = db.run(product.filter(_.id === id).delete).map(_ => ())

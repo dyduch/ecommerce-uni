@@ -13,24 +13,22 @@ CREATE TABLE "product"
     "color"       VARCHAR NOT NULL,
     "price"       REAL    NOT NULL,
     "description" TEXT    NOT NULL,
-    "category"    INTEGER NOT NULL,
-    FOREIGN KEY (category) references category (id)
+    "category_id"    INTEGER NOT NULL
 );
 
 CREATE TABLE "product_quantity"
 (
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "quantity" INTEGER NOT NULL,
     "size"     INTEGER NOT NULL,
-    "product"  INTEGER NOT NULL,
-    FOREIGN KEY (product) references product (id)
+    "product_id"  INTEGER NOT NULL
 );
 
 CREATE TABLE "image"
 (
     "id"      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "url"     TEXT    NOT NULL,
-    "product" INTEGER NOT NULL,
-    FOREIGN KEY (product) references product (id)
+    "product_id" INTEGER NOT NULL
 );
 
 CREATE TABLE "address"
@@ -47,15 +45,13 @@ CREATE TABLE "supplier"
 (
     "id"      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name"    TEXT    NOT NULL,
-    "address" INTEGER NOT NULL,
-    FOREIGN KEY (address) references address (id)
+    "address_id" INTEGER NOT NULL
 );
 
 CREATE TABLE "user"
 (
     "id"       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "address"  INTEGER NOT NULL,
-    FOREIGN KEY (address) references address (id),
+    "address_id"  INTEGER NOT NULL,
     "name"     TEXT    NOT NULL,
     "password" TEXT    NOT NULL,
     "admin"    BOOLEAN NOT NULL
@@ -64,32 +60,28 @@ CREATE TABLE "user"
 CREATE TABLE "order_data"
 (
     "id"      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "address" INTEGER NOT NULL,
-    FOREIGN KEY (address) references address (id),
-    "user"    INTEGER NOT NULL,
-    FOREIGN KEY (user) references user (id),
+    "address_id" INTEGER NOT NULL,
+    "user_id"    INTEGER NOT NULL,
     "total"   REAL    NOT NULL,
     "date"    TEXT    NOT NULL
-
-)
+);
 
 CREATE TABLE "order_status"
 (
-    "order_data" INTEGER NOT NULL,
-    FOREIGN KEY (order_data) references order_data (id),
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "order_id" INTEGER NOT NULL,
     "status"     TEXT    NOT NULL
-)
+);
 
 
 CREATE TABLE "order_item"
 (
-    "order_data" INTEGER NOT NULL,
-    FOREIGN KEY (order_data) references order_data (id),
-    "product"    INTEGER NOT NULL,
-    FOREIGN KEY (product) references product (id),
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "order_id" INTEGER NOT NULL,
+    "product_id"    INTEGER NOT NULL,
     "quantity"   INTEGER NOT NULL,
     "size"       INTEGER NOT NULL
-)
+);
     # --- !Downs
 
 DROP TABLE "category";

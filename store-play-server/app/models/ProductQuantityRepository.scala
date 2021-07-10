@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, productRepository: ProductRepository)(implicit ec: ExecutionContext) {
+class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -20,23 +20,18 @@ class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvid
 
     def size = column[Int]("size")
 
-    def product = column[Long]("product")
+    def product_id = column[Long]("product_id")
 
-    def product_fk = foreignKey("product_fk", product, product_table)(_.id)
-
-    override def * = (id, quantity, size, product) <> ((ProductQuantity.apply _).tupled, ProductQuantity.unapply)
+    override def * = (id, quantity, size, product_id) <> ((ProductQuantity.apply _).tupled, ProductQuantity.unapply)
   }
 
-  import productRepository.ProductTable
-
-  private val product_table = TableQuery[ProductTable]
   private val pq_table = TableQuery[ProductQuantityTable]
 
-  def create(quantity: Int, size: Int, product: Long): Future[ProductQuantity] = db.run {
-    (pq_table.map(pq => (pq.quantity, pq.size, pq.product))
+  def create(quantity: Int, size: Int, product_id: Long): Future[ProductQuantity] = db.run {
+    (pq_table.map(pq => (pq.quantity, pq.size, pq.product_id))
       returning pq_table.map(_.id)
-      into { case ((quantity, size, product), id) => ProductQuantity(id, quantity, size, product) }
-      ) += (quantity, size, product)
+      into { case ((quantity, size, product_id), id) => ProductQuantity(id, quantity, size, product_id) }
+      ) += (quantity, size, product_id)
   }
 
   def list(): Future[Seq[ProductQuantity]] = db.run {
@@ -44,7 +39,7 @@ class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvid
   }
 
   def getByProduct(product_id: Long): Future[Seq[ProductQuantity]] = db.run {
-    pq_table.filter(_.product === product_id).result
+    pq_table.filter(_.product_id === product_id).result
   }
 
   def getById(id: Long): Future[ProductQuantity] = db.run {

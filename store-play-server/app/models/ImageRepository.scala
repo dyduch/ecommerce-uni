@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ImageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, productRepository: ProductRepository) (implicit ec: ExecutionContext) {
+class ImageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (implicit ec: ExecutionContext) {
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -18,24 +18,18 @@ class ImageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, produ
 
     def url = column[String]("url")
 
-    def product = column[Long]("product")
+    def product_id = column[Long]("product_id")
 
-    def product_fk = foreignKey("product_fk", product, product_table)(_.id)
-
-    override def * = (id, url, product) <> ((Image.apply _).tupled, Image.unapply)
-
+    override def * = (id, url, product_id) <> ((Image.apply _).tupled, Image.unapply)
   }
 
-  import productRepository.ProductTable
-
-  private val product_table = TableQuery[ProductTable]
   private val image_table = TableQuery[ImageTable]
 
-  def create(url: String, product: Long): Future[Image] = db.run {
-    (image_table.map(image => (image.url, image.product))
+  def create(url: String, product_id: Long): Future[Image] = db.run {
+    (image_table.map(image => (image.url, image.product_id))
       returning image_table.map(_.id)
-      into { case ((url, product), id) => Image(id, url, product) }
-      ) += (url, product)
+      into { case ((url, product_id), id) => Image(id, url, product_id) }
+      ) += (url, product_id)
   }
 
   def list(): Future[Seq[Image]] = db.run {
@@ -43,7 +37,7 @@ class ImageRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, produ
   }
 
   def getByProduct(product_id: Long): Future[Seq[Image]] = db.run {
-    image_table.filter(_.product === product_id).result
+    image_table.filter(_.product_id === product_id).result
   }
 
   def getById(id: Long): Future[Image] = db.run {

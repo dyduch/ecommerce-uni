@@ -58,7 +58,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
 
     val product = productsRepo.getById(id)
     product.map(product => {
-      val prodForm = updateProductForm.fill(UpdateProductForm(product.id, product.name, product.description, product.category))
+      val prodForm = updateProductForm.fill(UpdateProductForm(product.id, product.name, product.description, product.category_id))
       Ok(views.html.productupdate(prodForm, categ))
     })
   }

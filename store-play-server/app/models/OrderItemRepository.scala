@@ -7,7 +7,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class OrderItemRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, orderRepository: OrderRepository, productRepository: ProductRepository) (implicit ec: ExecutionContext) {
+class OrderItemRepository @Inject() (dbConfigProvider: DatabaseConfigProvider) (implicit ec: ExecutionContext) {
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -20,30 +20,21 @@ class OrderItemRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, o
 
     def size = column[Int]("size")
 
-    def product = column[Long]("product")
+    def product_id = column[Long]("product_id")
 
-    def product_fk = foreignKey("product_fk", product, product_table)(_.id)
+    def order_id = column[Long]("order_id")
 
-    def order = column[Long]("order")
-
-    def order_fk = foreignKey("order_fk", order, order_table)(_.id)
-
-    override def * = (id, size, quantity, product, order) <> ((OrderItem.apply _).tupled, OrderItem.unapply)
+    override def * = (id, size, quantity, product_id, order_id) <> ((OrderItem.apply _).tupled, OrderItem.unapply)
 
   }
 
-  import orderRepository.OrderTable
-  import productRepository.ProductTable
-
-  private val order_table = TableQuery[OrderTable]
-  private val product_table = TableQuery[ProductTable]
   private val oi_table = TableQuery[OrderItemTable]
 
-  def create(size: Int, quantity: Int, order: Long, product: Long): Future[OrderItem] = db.run {
-    (oi_table.map(orderItem => (orderItem.size, orderItem.quantity, orderItem.order, orderItem.product))
+  def create(size: Int, quantity: Int, order_id: Long, product_id: Long): Future[OrderItem] = db.run {
+    (oi_table.map(orderItem => (orderItem.size, orderItem.quantity, orderItem.order_id, orderItem.product_id))
       returning oi_table.map(_.id)
-      into { case ((size, quantity, order, product), id) => OrderItem(id, size, quantity, order, product) }
-      ) += (size, quantity, order, product)
+      into { case ((size, quantity, order_id, product_id), id) => OrderItem(id, size, quantity, order_id, product_id) }
+      ) += (size, quantity, order_id, product_id)
   }
 
   def list(): Future[Seq[OrderItem]] = db.run {
@@ -51,7 +42,7 @@ class OrderItemRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, o
   }
 
   def getByOrder(order_id: Long): Future[Seq[OrderItem]] = db.run {
-    oi_table.filter(_.order === order_id).result
+    oi_table.filter(_.order_id === order_id).result
   }
 
   def getById(id: Long): Future[OrderItem] = db.run {
@@ -59,7 +50,7 @@ class OrderItemRepository @Inject() (dbConfigProvider: DatabaseConfigProvider, o
   }
 
   def getByProduct(product_id: Long): Future[Seq[OrderItem]] = db.run {
-    oi_table.filter(_.product === product_id).result
+    oi_table.filter(_.product_id === product_id).result
   }
 
   def getByIdOption(id: Long): Future[Option[OrderItem]] = db.run {
