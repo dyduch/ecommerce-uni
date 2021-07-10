@@ -16,9 +16,9 @@ class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvid
   private class ProductQuantityTable(tag: Tag) extends Table[ProductQuantity](tag, "product_quantity") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def quantity = column[Int]("quantity")
-
     def size = column[Int]("size")
+
+    def quantity = column[Int]("quantity")
 
     def product_id = column[Long]("product_id")
 
@@ -27,11 +27,11 @@ class ProductQuantityRepository @Inject()(dbConfigProvider: DatabaseConfigProvid
 
   private val pq_table = TableQuery[ProductQuantityTable]
 
-  def create(quantity: Int, size: Int, product_id: Long): Future[ProductQuantity] = db.run {
-    (pq_table.map(pq => (pq.quantity, pq.size, pq.product_id))
+  def create( size: Int, quantity: Int, product_id: Long): Future[ProductQuantity] = db.run {
+    (pq_table.map(pq => (pq.size, pq.quantity, pq.product_id))
       returning pq_table.map(_.id)
-      into { case ((quantity, size, product_id), id) => ProductQuantity(id, quantity, size, product_id) }
-      ) += (quantity, size, product_id)
+      into { case ((size, quantity, product_id), id) => ProductQuantity(id, size, quantity, product_id) }
+      ) += (size, quantity, product_id)
   }
 
   def list(): Future[Seq[ProductQuantity]] = db.run {

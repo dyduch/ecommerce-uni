@@ -1,0 +1,20 @@
+@(os: Form[CreateOrderStatusForm],order: Seq[Order])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.OrderStatusController.addHandle()) {
+    @helper.CSRF.formField
+    @inputText(os("status"))
+
+    <select name="order" id="order">
+    @for(o <- order){
+        <option value="@o.id">@o.id</option>
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Add OrderStatus"/>
+    </div>
+}

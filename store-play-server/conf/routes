@@ -4,172 +4,214 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET           /                                 controllers.HomeController.index()
+GET           /                                     controllers.HomeController.index()
 
 # products
 
 # form controllers
 
-GET           /addproduct                       controllers.ProductController.addProduct()
-POST          /addproducthandle                 controllers.ProductController.addProductHandle()
-GET           /updateproduct/:id                controllers.ProductController.updateProduct(id: Long)
-POST          /updateproducthandle              controllers.ProductController.updateProductHandle()
-GET           /products                         controllers.ProductController.getProducts()
-GET           /product/:id                      controllers.ProductController.getProduct(id: Long)
-GET           /deleteproduct/:id                controllers.ProductController.delete(id: Long)
+GET           /addproduct                           controllers.ProductController.addProduct()
+POST          /addproducthandle                     controllers.ProductController.addProductHandle()
+GET           /updateproduct/:id                    controllers.ProductController.updateProduct(id: Long)
+POST          /updateproducthandle                  controllers.ProductController.updateProductHandle()
+GET           /products                             controllers.ProductController.getProducts()
+GET           /product/:id                          controllers.ProductController.getProduct(id: Long)
+GET           /deleteproduct/:id                    controllers.ProductController.delete(id: Long)
 
 # json controllers
 
-GET           /api/products                     controllers.ProductController.getProductsJSON
-GET           /api/products/:id                 controllers.ProductController.getProductJSON(id: Long)
-POST          /api/products/add                 controllers.ProductController.addProductJSON(name: String, color: String, price: Int, description: String, category_id: Int)
-DELETE        /api/products/delete/:id          controllers.ProductController.deleteJSON(id: Long)
-PUT           /api/products/update              controllers.ProductController.updateProductJSON(id: Long, name: String, color: String, price: Int, description: String, category_id: Int)
+GET           /api/products                         controllers.ProductController.getProductsJSON
+GET           /api/products/:id                     controllers.ProductController.getProductJSON(id: Long)
+POST          /api/products/add                     controllers.ProductController.addProductJSON(name: String, color: String, price: Int, description: String, category_id: Int)
+DELETE        /api/products/delete/:id              controllers.ProductController.deleteJSON(id: Long)
+PUT           /api/products/update                  controllers.ProductController.updateProductJSON(id: Long, name: String, color: String, price: Int, description: String, category_id: Int)
 
 # categories
 
 # form controllers
 
-GET           /addcategory                      controllers.CategoryController.addCategory()
-POST          /addcategoryhandle                controllers.CategoryController.addCategoryHandle()
-GET           /updatecategory/:id               controllers.CategoryController.updateCategory(id: Int)
-POST          /updatecategoryhandle             controllers.CategoryController.updateCategoryHandle()
-GET           /categories                       controllers.CategoryController.getCategories()
-GET           /categories/:id                   controllers.CategoryController.getCategory(id: Int)
-GET           /deletecategory/:id               controllers.CategoryController.delete(id: Int)
+GET           /addcategory                          controllers.CategoryController.addCategory()
+POST          /addcategoryhandle                    controllers.CategoryController.addCategoryHandle()
+GET           /updatecategory/:id                   controllers.CategoryController.updateCategory(id: Int)
+POST          /updatecategoryhandle                 controllers.CategoryController.updateCategoryHandle()
+GET           /categories                           controllers.CategoryController.getCategories()
+GET           /categories/:id                       controllers.CategoryController.getCategory(id: Int)
+GET           /deletecategory/:id                   controllers.CategoryController.delete(id: Int)
 
 # json controllers
 
-GET           /api/categories                   controllers.CategoryController.getCategoriesJSON
-GET           /api/categories/:id               controllers.CategoryController.getCategoryJSON(id: Int)
-POST          /api/categories/add               controllers.CategoryController.addCategoryJSON(name: String)
-DELETE        /api/categories/delete/:id        controllers.CategoryController.deleteJSON(id: Int)
-PUT           /api/categories/update            controllers.CategoryController.updateCategoryJSON(id: Int, name: String)
+GET           /api/categories                       controllers.CategoryController.getCategoriesJSON
+GET           /api/categories/:id                   controllers.CategoryController.getCategoryJSON(id: Int)
+POST          /api/categories/add                   controllers.CategoryController.addCategoryJSON(name: String)
+DELETE        /api/categories/delete/:id            controllers.CategoryController.deleteJSON(id: Int)
+PUT           /api/categories/update                controllers.CategoryController.updateCategoryJSON(id: Int, name: String)
 
 # addresses
 
 # form controllers
 
-GET           /addaddress                       controllers.AddressController.add()
-POST          /addaddresshandle                 controllers.AddressController.addHandle()
-GET           /updateaddress/:id                controllers.AddressController.update(id: Long)
-POST          /updateaddresshandle              controllers.AddressController.updateHandle()
-GET           /addresses                        controllers.AddressController.getAll()
-GET           /addresses/:id                    controllers.AddressController.get(id: Long)
-GET           /deleteaddress/:id                controllers.AddressController.delete(id: Long)
+GET           /addaddress                           controllers.AddressController.add()
+POST          /addaddresshandle                     controllers.AddressController.addHandle()
+GET           /updateaddress/:id                    controllers.AddressController.update(id: Long)
+POST          /updateaddresshandle                  controllers.AddressController.updateHandle()
+GET           /addresses                            controllers.AddressController.getAll()
+GET           /addresses/:id                        controllers.AddressController.get(id: Long)
+GET           /deleteaddress/:id                    controllers.AddressController.delete(id: Long)
 
 # json controllers
 
-GET           /api/addresses                    controllers.AddressController.getAllJSON
-GET           /api/addresses/:id                controllers.AddressController.getJSON(id: Long)
-POST          /api/addresses/add                controllers.AddressController.addJSON(street: String, number: String, city: String, zipcode: String, country: String)
-DELETE        /api/addresses/delete/:id         controllers.AddressController.deleteJSON(id: Long)
-PUT           /api/addresses/update             controllers.AddressController.updateJSON(id: Long, street: String, number: String, city: String, zipcode: String, country: String)
+GET           /api/addresses                        controllers.AddressController.getAllJSON
+GET           /api/addresses/:id                    controllers.AddressController.getJSON(id: Long)
+POST          /api/addresses/add                    controllers.AddressController.addJSON(street: String, number: String, city: String, zipcode: String, country: String)
+DELETE        /api/addresses/delete/:id             controllers.AddressController.deleteJSON(id: Long)
+PUT           /api/addresses/update                 controllers.AddressController.updateJSON(id: Long, street: String, number: String, city: String, zipcode: String, country: String)
 
 # images
 
 # form controllers
 
-GET           /addimage                         controllers.ImageController.add()
-POST          /addimagehandle                   controllers.ImageController.addHandle()
-GET           /updateimage/:id                  controllers.ImageController.update(id: Long)
-POST          /updateimagehandle                controllers.ImageController.updateHandle()
-GET           /images                           controllers.ImageController.getAll()
-GET           /image/:id                        controllers.ImageController.get(id: Long)
-GET           /deleteimage/:id                  controllers.ImageController.delete(id: Long)
+GET           /addimage                             controllers.ImageController.add()
+POST          /addimagehandle                       controllers.ImageController.addHandle()
+GET           /updateimage/:id                      controllers.ImageController.update(id: Long)
+POST          /updateimagehandle                    controllers.ImageController.updateHandle()
+GET           /images                               controllers.ImageController.getAll()
+GET           /image/:id                            controllers.ImageController.get(id: Long)
+GET           /deleteimage/:id                      controllers.ImageController.delete(id: Long)
 
 # json controllers
 
-GET           /api/images                       controllers.ImageController.getAllJSON()
-GET           /api/images/product/:id           controllers.ImageController.getAllProductJSON(id: Long)
-GET           /api/images/:id                   controllers.ImageController.getJSON(id: Long)
-POST          /api/images/add                   controllers.ImageController.addJSON(url: String, product_id: Long)
-DELETE        /api/images/delete/:id            controllers.ImageController.deleteJSON(id: Long)
-PUT           /api/images/update                controllers.ImageController.updateJSON(id: Long, url: String, product_id: Long)
+GET           /api/images                           controllers.ImageController.getAllJSON()
+GET           /api/images/product/:id               controllers.ImageController.getAllProductJSON(id: Long)
+GET           /api/images/:id                       controllers.ImageController.getJSON(id: Long)
+POST          /api/images/add                       controllers.ImageController.addJSON(url: String, product_id: Long)
+DELETE        /api/images/delete/:id                controllers.ImageController.deleteJSON(id: Long)
+PUT           /api/images/update                    controllers.ImageController.updateJSON(id: Long, url: String, product_id: Long)
 
 # orders
 
 # form controllers
 
-GET           /addorder                         controllers.OrderController.add()
-POST          /addorderhandle                   controllers.OrderController.addHandle()
-GET           /updateorder/:id                  controllers.OrderController.update(id: Long)
-POST          /updateorderhandle                controllers.OrderController.updateHandle()
-GET           /orders                           controllers.OrderController.getAll()
-GET           /order/:id                        controllers.OrderController.get(id: Long)
-GET           /deleteorder/:id                  controllers.OrderController.delete(id: Long)
+GET           /addorder                             controllers.OrderController.add()
+POST          /addorderhandle                       controllers.OrderController.addHandle()
+GET           /updateorder/:id                      controllers.OrderController.update(id: Long)
+POST          /updateorderhandle                    controllers.OrderController.updateHandle()
+GET           /orders                               controllers.OrderController.getAll()
+GET           /order/:id                            controllers.OrderController.get(id: Long)
+GET           /deleteorder/:id                      controllers.OrderController.delete(id: Long)
 
 # json controllers
 
-GET           /api/orders                       controllers.OrderController.getAllJSON()
-GET           /api/orders/user/:id              controllers.OrderController.getForUserJSON(id: Long)
-GET           /api/orders/:id                   controllers.OrderController.getJSON(id: Long)
-POST          /api/orders/add                   controllers.OrderController.addJSON(date: String, total: Int, user_id: Long, address_id: Long)
-DELETE        /api/orders/delete/:id            controllers.OrderController.deleteJSON(id: Long)
-PUT           /api/orders/update                controllers.OrderController.updateJSON(id: Long, date: String, total: Int, user_id: Long, address_id: Long)
+GET           /api/orders                           controllers.OrderController.getAllJSON()
+GET           /api/orders/user/:id                  controllers.OrderController.getForUserJSON(id: Long)
+GET           /api/orders/:id                       controllers.OrderController.getJSON(id: Long)
+POST          /api/orders/add                       controllers.OrderController.addJSON(date: String, total: Int, user_id: Long, address_id: Long)
+DELETE        /api/orders/delete/:id                controllers.OrderController.deleteJSON(id: Long)
+PUT           /api/orders/update                    controllers.OrderController.updateJSON(id: Long, date: String, total: Int, user_id: Long, address_id: Long)
 
 # suppliers
 
 # form controllers
 
-GET           /addsupplier                      controllers.SupplierController.add()
-POST          /addsupplierhandle                controllers.SupplierController.addHandle()
-GET           /updatesupplier/:id               controllers.SupplierController.update(id: Long)
-POST          /updatesupplierhandle             controllers.SupplierController.updateHandle()
-GET           /suppliers                        controllers.SupplierController.getAll()
-GET           /supplier/:id                     controllers.SupplierController.get(id: Long)
-GET           /deletesupplier/:id               controllers.SupplierController.delete(id: Long)
+GET           /addsupplier                          controllers.SupplierController.add()
+POST          /addsupplierhandle                    controllers.SupplierController.addHandle()
+GET           /updatesupplier/:id                   controllers.SupplierController.update(id: Long)
+POST          /updatesupplierhandle                 controllers.SupplierController.updateHandle()
+GET           /suppliers                            controllers.SupplierController.getAll()
+GET           /supplier/:id                         controllers.SupplierController.get(id: Long)
+GET           /deletesupplier/:id                   controllers.SupplierController.delete(id: Long)
 
 # json controllers
 
-GET           /api/suppliers                    controllers.SupplierController.getAllJSON()
-GET           /api/suppliers/:id                controllers.SupplierController.getJSON(id: Long)
-POST          /api/suppliers/add                controllers.SupplierController.addJSON(name: String, address_id: Long)
-DELETE        /api/suppliers/delete/:id         controllers.SupplierController.deleteJSON(id: Long)
-PUT           /api/suppliers/update             controllers.SupplierController.updateJSON(id: Long, name: String, address_id: Long)
+GET           /api/suppliers                        controllers.SupplierController.getAllJSON()
+GET           /api/suppliers/:id                    controllers.SupplierController.getJSON(id: Long)
+POST          /api/suppliers/add                    controllers.SupplierController.addJSON(name: String, address_id: Long)
+DELETE        /api/suppliers/delete/:id             controllers.SupplierController.deleteJSON(id: Long)
+PUT           /api/suppliers/update                 controllers.SupplierController.updateJSON(id: Long, name: String, address_id: Long)
 
 
 # users
 
 # form controllers
 
-GET           /adduser                          controllers.UserController.add()
-POST          /adduserhandle                    controllers.UserController.addHandle()
-GET           /updateuser/:id                   controllers.UserController.update(id: Long)
-POST          /updateuserhandle                 controllers.UserController.updateHandle()
-GET           /users                            controllers.UserController.getAll()
-GET           /user/:id                         controllers.UserController.get(id: Long)
-GET           /deleteuser/:id                   controllers.UserController.delete(id: Long)
+GET           /adduser                              controllers.UserController.add()
+POST          /adduserhandle                        controllers.UserController.addHandle()
+GET           /updateuser/:id                       controllers.UserController.update(id: Long)
+POST          /updateuserhandle                     controllers.UserController.updateHandle()
+GET           /users                                controllers.UserController.getAll()
+GET           /user/:id                             controllers.UserController.get(id: Long)
+GET           /deleteuser/:id                       controllers.UserController.delete(id: Long)
 
 # json controllers
 
-GET           /api/users                        controllers.UserController.getAllJSON()
-GET           /api/users/:id                    controllers.UserController.getJSON(id: Long)
-POST          /api/users/add                    controllers.UserController.addJSON(name: String, password:String, admin: Boolean, address_id: Long)
-DELETE        /api/users/delete/:id             controllers.UserController.deleteJSON(id: Long)
-PUT           /api/users/update                 controllers.UserController.updateJSON(id: Long, name: String, password:String, admin: Boolean, address_id: Long)
+GET           /api/users                            controllers.UserController.getAllJSON()
+GET           /api/users/:id                        controllers.UserController.getJSON(id: Long)
+POST          /api/users/add                        controllers.UserController.addJSON(name: String, password:String, admin: Boolean, address_id: Long)
+DELETE        /api/users/delete/:id                 controllers.UserController.deleteJSON(id: Long)
+PUT           /api/users/update                     controllers.UserController.updateJSON(id: Long, name: String, password:String, admin: Boolean, address_id: Long)
 
 
 # order items
 
 # form controllers
 
-GET           /addorderitem                     controllers.OrderItemController.add()
-POST          /addorderitemhandle               controllers.OrderItemController.addHandle()
-GET           /updateorderitem/:id              controllers.OrderItemController.update(id: Long)
-POST          /updateorderitemhandle            controllers.OrderItemController.updateHandle()
-GET           /orderitems                       controllers.OrderItemController.getAll()
-GET           /orderitem/:id                    controllers.OrderItemController.get(id: Long)
-GET           /deleteorderitem/:id              controllers.OrderItemController.delete(id: Long)
+GET           /addorderitem                         controllers.OrderItemController.add()
+POST          /addorderitemhandle                   controllers.OrderItemController.addHandle()
+GET           /updateorderitem/:id                  controllers.OrderItemController.update(id: Long)
+POST          /updateorderitemhandle                controllers.OrderItemController.updateHandle()
+GET           /orderitems                           controllers.OrderItemController.getAll()
+GET           /orderitem/:id                        controllers.OrderItemController.get(id: Long)
+GET           /deleteorderitem/:id                  controllers.OrderItemController.delete(id: Long)
 
 # json controllers
 
-GET           /api/orderitems                   controllers.OrderItemController.getAllJSON()
-GET           /api/orderitems/order/:id         controllers.OrderItemController.getForOrderJSON(id: Long)
-GET           /api/orderitems/:id               controllers.OrderItemController.getJSON(id: Long)
-POST          /api/orderitems/add               controllers.OrderItemController.addJSON(size: Int, quantity: Int, order_id: Long, product_id: Long)
-DELETE        /api/orderitems/delete/:id        controllers.OrderItemController.deleteJSON(id: Long)
-PUT           /api/orderitems/update            controllers.OrderItemController.updateJSON(id: Long, size: Int, quantity: Int, order_id: Long, product_id: Long)
+GET           /api/orderitems                       controllers.OrderItemController.getAllJSON()
+GET           /api/orderitems/order/:id             controllers.OrderItemController.getForOrderJSON(id: Long)
+GET           /api/orderitems/:id                   controllers.OrderItemController.getJSON(id: Long)
+POST          /api/orderitems/add                   controllers.OrderItemController.addJSON(size: Int, quantity: Int, order_id: Long, product_id: Long)
+DELETE        /api/orderitems/delete/:id            controllers.OrderItemController.deleteJSON(id: Long)
+PUT           /api/orderitems/update                controllers.OrderItemController.updateJSON(id: Long, size: Int, quantity: Int, order_id: Long, product_id: Long)
+
+
+# order items
+
+# form controllers
+
+GET           /addpq                                controllers.ProductQuantityController.add()
+POST          /addpqhandle                          controllers.ProductQuantityController.addHandle()
+GET           /updatepq/:id                         controllers.ProductQuantityController.update(id: Long)
+POST          /updatepqhandle                       controllers.ProductQuantityController.updateHandle()
+GET           /pqs                                  controllers.ProductQuantityController.getAll()
+GET           /pq/:id                               controllers.ProductQuantityController.get(id: Long)
+GET           /deletepq/:id                         controllers.ProductQuantityController.delete(id: Long)
+
+# json controllers
+
+GET           /api/pqs                              controllers.ProductQuantityController.getAllJSON()
+GET           /api/pqs/:id                          controllers.ProductQuantityController.getJSON(id: Long)
+POST          /api/pqs/add                          controllers.ProductQuantityController.addJSON(size: Int, quantity: Int, product_id: Long)
+DELETE        /api/pqs/delete/:id                   controllers.ProductQuantityController.deleteJSON(id: Long)
+PUT           /api/pqs/update                       controllers.ProductQuantityController.updateJSON(id: Long, size: Int, quantity: Int, product_id: Long)
+
+# order status
+
+# form controllers
+
+GET           /addorderstatus                       controllers.OrderStatusController.add()
+POST          /addorderstatushandle                 controllers.OrderStatusController.addHandle()
+GET           /updateorderstatus/:id                controllers.OrderStatusController.update(id: Long)
+POST          /updateorderstatushandle              controllers.OrderStatusController.updateHandle()
+GET           /orderstatuses                        controllers.OrderStatusController.getAll()
+GET           /orderstatus/:id                      controllers.OrderStatusController.get(id: Long)
+GET           /deleteorderstatus/:id                controllers.OrderStatusController.delete(id: Long)
+
+# json controllers
+
+GET           /api/orderstatuses                    controllers.OrderStatusController.getAllJSON()
+GET           /api/orderstatuses/product/:id        controllers.OrderStatusController.getAllOrderJSON(id: Long)
+GET           /api/orderstatuses/:id                controllers.OrderStatusController.getJSON(id: Long)
+POST          /api/orderstatuses/add                controllers.OrderStatusController.addJSON(status: String, order_id: Long)
+DELETE        /api/orderstatuses/delete/:id         controllers.OrderStatusController.deleteJSON(id: Long)
+PUT           /api/orderstatuses/update             controllers.OrderStatusController.updateJSON(id: Long, status: String, order_id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                         controllers.Assets.versioned(path="/public", file: Asset)
