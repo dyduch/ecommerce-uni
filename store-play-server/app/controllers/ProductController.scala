@@ -63,9 +63,9 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     })
   }
 
-  def updateProductHandle() = Action.async { implicit request =>
+  def updateProductHandle(): Action[AnyContent] = Action.async { implicit request =>
     var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
+    val categories: Unit = categoryRepo.list().onComplete {
       case Success(cat) => categ = cat
       case Failure(_) => print("fail")
     }
@@ -90,7 +90,7 @@ class ProductController @Inject()(productsRepo: ProductRepository, categoryRepo:
     categories.map(cat => Ok(views.html.productadd(productForm, cat)))
   }
 
-  def addProductHandle() = Action.async { implicit request =>
+  def addProductHandle(): Action[AnyContent] = Action.async { implicit request =>
     var categ: Seq[Category] = Seq[Category]()
     val categories: Unit = categoryRepo.list().onComplete {
       case Success(cat) => categ = cat

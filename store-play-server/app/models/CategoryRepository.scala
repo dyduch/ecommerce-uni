@@ -21,6 +21,10 @@ class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(im
 
   val category = TableQuery[CategoryTable]
 
+  def getTableQuery: TableQuery[CategoryTable] = {
+    TableQuery[CategoryTable];
+  }
+
   def create(name: String): Future[Category] = db.run {
     (category.map(c => (c.name))
       returning category.map(_.id)
