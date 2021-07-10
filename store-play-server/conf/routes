@@ -108,8 +108,46 @@ POST          /api/orders/add                   controllers.OrderController.addJ
 DELETE        /api/orders/delete/:id            controllers.OrderController.deleteJSON(id: Long)
 PUT           /api/orders/update                controllers.OrderController.updateJSON(id: Long, date: String, total: Int, user_id: Long, address_id: Long)
 
+# suppliers
+
+# form controllers
+
+GET           /addsupplier                      controllers.SupplierController.add()
+POST          /addsupplierhandle                controllers.SupplierController.addHandle()
+GET           /updatesupplier/:id               controllers.SupplierController.update(id: Long)
+POST          /updatesupplierhandle             controllers.SupplierController.updateHandle()
+GET           /suppliers                        controllers.SupplierController.getAll()
+GET           /supplier/:id                     controllers.SupplierController.get(id: Long)
+GET           /deletesupplier/:id               controllers.SupplierController.delete(id: Long)
+
+# json controllers
+
+GET           /api/suppliers                    controllers.SupplierController.getAllJSON()
+GET           /api/suppliers/:id                controllers.SupplierController.getJSON(id: Long)
+POST          /api/suppliers/add                controllers.SupplierController.addJSON(name: String, address_id: Long)
+DELETE        /api/suppliers/delete/:id         controllers.SupplierController.deleteJSON(id: Long)
+PUT           /api/suppliers/update             controllers.SupplierController.updateJSON(id: Long, name: String, address_id: Long)
 
 
+# users
+
+# form controllers
+
+GET           /adduser                          controllers.UserController.add()
+POST          /adduserhandle                    controllers.UserController.addHandle()
+GET           /updateuser/:id                   controllers.UserController.update(id: Long)
+POST          /updateuserhandle                 controllers.UserController.updateHandle()
+GET           /users                            controllers.UserController.getAll()
+GET           /user/:id                         controllers.UserController.get(id: Long)
+GET           /deleteuser/:id                   controllers.UserController.delete(id: Long)
+
+# json controllers
+
+GET           /api/users                        controllers.UserController.getAllJSON()
+GET           /api/users/:id                    controllers.UserController.getJSON(id: Long)
+POST          /api/users/add                    controllers.UserController.addJSON(name: String, password:String, admin: Boolean, address_id: Long)
+DELETE        /api/users/delete/:id             controllers.UserController.deleteJSON(id: Long)
+PUT           /api/users/update                 controllers.UserController.updateJSON(id: Long, name: String, password:String, admin: Boolean, address_id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)

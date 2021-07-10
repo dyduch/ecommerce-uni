@@ -16,7 +16,7 @@ class ImageController @Inject()(imagesRepo: ImageRepository, productRepo: Produc
   val imageForm: Form[CreateImageForm] = Form {
     mapping(
       "url" -> nonEmptyText,
-      "product_id" -> longNumber,
+      "product" -> longNumber,
     )(CreateImageForm.apply)(CreateImageForm.unapply)
   }
 
@@ -24,7 +24,7 @@ class ImageController @Inject()(imagesRepo: ImageRepository, productRepo: Produc
     mapping(
       "id" -> longNumber,
       "url" -> nonEmptyText,
-      "product_id" -> longNumber,
+      "product" -> longNumber,
     )(UpdateImageForm.apply)(UpdateImageForm.unapply)
   }
 

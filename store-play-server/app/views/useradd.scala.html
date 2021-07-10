@@ -1,0 +1,22 @@
+@(user: Form[CreateUserForm],address: Seq[Address])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.UserController.addHandle()) {
+    @helper.CSRF.formField
+    @inputText(user("name"))
+    @inputText(user("password"))
+    @checkbox(user("admin"))
+
+    <select name="address" id="address">
+    @for(a <- address){
+        <option value="@a.id">@a.street @a.number @a.city</option>
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Add User"/>
+    </div>
+}

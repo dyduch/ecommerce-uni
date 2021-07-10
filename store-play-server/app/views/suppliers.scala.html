@@ -1,0 +1,8 @@
+@(suppliers: Seq[Supplier])
+
+@for(supplier <- suppliers) {
+    <b>@supplier.name</b>
+    @supplier.address_id
+    <a href="@controllers.routes.SupplierController.update(supplier.id)">Edit</a>
+    <a href="@controllers.routes.SupplierController.delete(supplier.id)">Delete</a>
+}

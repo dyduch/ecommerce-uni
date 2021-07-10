@@ -1,0 +1,28 @@
+
+@(supplier: Form[UpdateSupplierForm],address: Seq[Address])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.SupplierController.updateHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@supplier("id").value" type="hidden" />
+    @inputText(supplier("name"))
+
+    <label for="address"></label>
+    <select name="address" id="address">
+    @for(a <- address){
+        @if(a.id.toString==supplier("address_id").value.getOrElse(0)) {
+            <option value="@a.id" selected>@a.street @a.number @a.city/option>
+        }else{
+            <option value="@a.id">@a.street @a.number @a.city</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Supplier"/>
+    </div>
+}
