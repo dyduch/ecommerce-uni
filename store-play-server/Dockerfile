@@ -34,3 +34,4 @@ WORKDIR /home/dyduch
 
 COPY . /home/dyduch/store-play-server/
 WORKDIR /home/dyduch/store-play-server
+ENTRYPOINT bash /usr/local/sbt/bin/sbt run

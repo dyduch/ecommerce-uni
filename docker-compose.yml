@@ -12,13 +12,12 @@ services:
       - 12345:3000
     working_dir: /home/dyduch/store-react-client/
     command: bash -c "cd store-react-client && npm start"
-  play-server:
-    build:
-      context: ./store-play-server
-      dockerfile: Dockerfile
-    ports:
-    - 12346:9000
-    volumes:
-     - '.:/home/dyduch/store-play-server'
-    working_dir: /home/dyduch/store-play-server/
-    command: bash -c "/usr/local/sbt/bin/sbt run"
+  # play-server:
+  #   build:
+  #     context: ./store-play-server
+  #     dockerfile: Dockerfile
+  #   ports:
+  #   - 12346:9000
+  #   volumes:
+  #    - '.:/home/dyduch/store-play-server'
+  #   working_dir: /home/dyduch/store-play-server/
