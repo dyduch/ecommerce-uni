@@ -1,8 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./style/Product.css";
+import {fetchImage, fetchProducts} from "../../api/products";
 
 export function ProductPreview(props) {
-    const imagePath = process.env.PUBLIC_URL + "/assets/images/" + props.image;
+
+    const [image, setImage] = useState([]);
+
+    useEffect(() => {
+        fetchImage(props.id)
+            .then((img) => {
+                setImage(img)
+            })
+    }, []);
+
+    const imageUrl = image[0] ? image[0].url  : '';
+    const imagePath = process.env.PUBLIC_URL + "/assets/images/" + imageUrl;
+
     return (
         <div className={"preview-product"}>
             <div className={"preview-product-image"}>
