@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {fetchMockProducts, fetchProducts} from "../api/products";
-import {fetchMockOrders} from "../api/orders";
+import {fetchMockOrders, fetchOrders} from "../api/orders";
 
 const defaultValue = {
     products: [],
@@ -19,14 +19,14 @@ export function ShopContextProvider(props) {
     }
 
     useEffect(() => {
-        fetchMockProducts()
+        fetchProducts()
             .then((products) => {
                 setProducts(products)
             })
     }, []);
 
     useEffect(() => {
-        fetchMockOrders()
+        fetchOrders()
             .then((orders) => {
                 setOrders(orders)
             })

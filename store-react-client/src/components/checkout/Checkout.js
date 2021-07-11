@@ -1,8 +1,10 @@
 import React, {Component} from "react";
+import {postOrder} from "../../api/orders";
 
 export class Checkout extends Component {
     constructor(props) {
         super(props);
+        console.log(props.cartItems)
         this.state = {
             fullName: '',
             address: '',
@@ -22,7 +24,8 @@ export class Checkout extends Component {
     }
 
     handleSubmit(event) {
-        alert('Order placed');
+        console.log(this.state);
+        postOrder(this.state.fullName, this.state.address, this.props.totalPrice).then(r => console.log(r));
         event.preventDefault();
     }
 

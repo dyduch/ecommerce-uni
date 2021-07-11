@@ -1,7 +1,19 @@
 export const fetchProducts = async () => {
-    return await fetch(`http://localhost:9000/products`)
+    return await fetch(`http://localhost:9000/api/products` )
+        .then(response => response.json())
+}
+
+export const fetchProduct = async (id) => {
+    return await fetch(`http://localhost:9000/api/products/${id}` )
+        .then(response => response.json())
+}
+
+
+export const fetchImage = async (id) => {
+    return await fetch(`http://localhost:9000/api/images/product/${id}`)
         .then(response => response.json());
 }
+
 
 export const fetchMockProducts = async () => {
     return [

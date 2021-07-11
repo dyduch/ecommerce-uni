@@ -11,7 +11,11 @@ export function ShoppingCart(props) {
         <div>
             <BrowserRouter>
                 <button><Link to="/checkout">Checkout</Link></button>
-                <Route path="/checkout" component={Checkout}/>
+                <Route path="/checkout"
+                       render={(props) => (
+                           <Checkout {...props} totalPrice={totalPrice} cartItems={cartItems} />
+                       )}
+                />
 
             <div className="cart">
                 <div className="total-price">

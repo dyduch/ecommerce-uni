@@ -1,11 +1,23 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./style/Cart.css";
 import CartContext from "../../contexts/CartContext";
+import {fetchImage} from "../../api/products";
 
 export function CartProduct(props) {
     const [quantity, setQuantity] = useState(props.quantity);
 
-    const imagePath = process.env.PUBLIC_URL + "/assets/images/" + props.image;
+    const [image, setImage] = useState([]);
+
+    useEffect(() => {
+        fetchImage(props.id)
+            .then((img) => {
+                setImage(img)
+            })
+    }, []);
+
+    const imageUrl = image[0] ? image[0].url  : '';
+    const imagePath = process.env.PUBLIC_URL + "/assets/images/" + imageUrl;
+
     const {removeItem} = useContext(CartContext);
 
     return (

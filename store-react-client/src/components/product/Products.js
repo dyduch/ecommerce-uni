@@ -14,7 +14,7 @@ export function Products(props) {
                 <ul className="products-list">
                     {products.map((product) => (
                         <li>
-                            <ProductPreview name={product.name} color={product.color} price={product.price} image={product.image}/>
+                            <ProductPreview id ={product.id} name={product.name} color={product.color} price={product.price} image={product.image}/>
                             <button onClick={() => addItem(product)}>Add To Cart</button>
                         </li>))}
                 </ul>
