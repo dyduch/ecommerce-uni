@@ -1,19 +1,20 @@
 name := """store-play-server"""
 organization := "pl.edu.uj"
 
-version := "1.0-SNAPSHOT"
+version := "1.0"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.13.6"
+scalaVersion := "2.12.2"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-slick" % "5.0.0",
-  "com.typesafe.play" %% "play-slick-evolutions" % "5.0.0"
+  ehcache , ws , specs2 % Test , guice )
+libraryDependencies ++= Seq(
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.3",
+  "com.typesafe.play" %% "play-slick" % "4.0.0",
+  "com.typesafe.play" %% "play-slick-evolutions" % "4.0.0",
+  "org.xerial"        %  "sqlite-jdbc" % "3.31.1"
 )
-libraryDependencies += "org.xerial" %  "sqlite-jdbc" % "3.30.1"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "pl.edu.uj.controllers._"
